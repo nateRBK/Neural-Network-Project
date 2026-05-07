@@ -1,52 +1,53 @@
 
-
 import numpy as np
-import nn_functions as f
 
-class activationLayer:
-    def __init__(self, name: str):
-        self.func = f.activations(name)
-        
-    def activate(self, num):
-        return self.func(num)
+class Normalizations:
+    def __init__(self):
+        return
+    def normalize(self, x):
+        raise NotImplemented
+    def __call__(self, x):
+        return self.normalize(x)
 
-    def isActivation(self):
-        return True
+class Min_Max(Normalizations):
+    def normalize(self, x):
+        x_min = x.min()
+        x_max = x.max()
+        return (x-x_min)/(x_max-x_min)
+    
+class Standard(Normalizations):
+    def normalize(self, x):
+        mean = x.mean()
+        std = x.std()
+        return (x-mean)/std
 
-    def isNormalization(self):
-        return False
+class Activations:
+    def __init__(self):
+        return
+    def activate(self,x):
+        raise NotImplementedError
+    def __call__(self, x):
+        return self.activate(x)
 
-class normalizationLayer:
-    def __init__(self, name: str):
-        self.func = f.normalizations(name)
 
-    def normalize(self, num):
-        return self.func(num)
-
-    def isNormalization(self):
-        return True
-
-    def isActivation(self):
-        return False
-
+class ReLU(Activations):
+    def activate(self,x):
+        return np.maximum(0,x)
+    
+class tanh(Activations):
+    def activate(self, x):
+        return np.tanh(x)
 
 class Layer:
     def __init__(self, inputSize, outputSize = None):
         if outputSize == None:
             self.input, self.output = inputSize, inputSize
-            self.isTail = True
         else:
             self.input, self.output = inputSize, outputSize
             
     def getInput(self):
         return self.input
     def getSize(self):
-        return self.input
-    def isActivation(self):
-        return False
-    def isNormalization(self):
-        return False
+        return len(self.input)
     def getOutput(self):
         return self.output
-    def tail(self):
-        return self.isTail

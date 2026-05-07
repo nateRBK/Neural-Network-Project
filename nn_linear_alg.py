@@ -1,20 +1,11 @@
 import numpy as np
 from numpy import array
 
-class Vector:
-    def __init__(self, data):
-        self.values = []
-        if isinstance(data, int):
-            for i in range(0,data):
-                self.values.append(np.random.rand()*2 - 1)
-        elif isinstance(data, list):
-            self.values = data
-        else:
-            raise TypeError("weh")
-    def getValues(self):
-        return np.array(self.values)
-    def getLength(self):
-        return len(self.values)
+def randList(size):
+    result = []
+    for i in range(size):
+        result.append(np.random.rand())
+    return result
 
 class randMatrix:
     def __init__(self, m, n):
