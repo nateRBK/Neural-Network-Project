@@ -13,11 +13,12 @@ class Loss:
 
 class MSE(Loss):
     def forward(self, y_exp, y_pred):
-        self.diff = y_exp - y_pred
+        self.diff = y_pred - y_exp
         return np.mean((self.diff)**2)
     
     def backward(self):
         return 2 * self.diff / np.size(self.diff)
+    
     
 class MAE(Loss):
     def forward(self, y_exp, y_pred):
@@ -57,7 +58,7 @@ class Huber(Loss):
         ) / np.size(self.diff)
     
 class Cross_Entropy(Loss):
-    def __init(self):
+    def __init__(self):
         self.y_exp, self.y_pred = 0,0
     def forward(self, y_exp, y_pred):
         self.y_exp, self.y_pred = y_exp, y_pred

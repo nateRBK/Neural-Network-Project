@@ -1,6 +1,8 @@
 import numpy as np
 from numpy import array
 
+
+
 def randList(size):
     result = []
     for i in range(size):
